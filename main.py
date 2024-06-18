@@ -8,6 +8,7 @@ import google.ai.generativelanguage as glm
 import time
 import threading
 import uvicorn
+import os
 
 # Configure your API key
 API_KEY = 'AIzaSyAv7RXj23iVkQ6ZMjbTLLu5v1-_J1v09vY'
@@ -62,4 +63,5 @@ async def startup_event():
     threading.Thread(target=periodic_task, daemon=True).start()
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info", limit_concurrency=10, timeout_keep_alive=300)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info", limit_concurrency=10, timeout_keep_alive=300)
